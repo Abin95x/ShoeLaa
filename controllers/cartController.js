@@ -96,7 +96,7 @@ const change = async (req, res, next) => {
         const count = req.body.count;
         const cartId = req.body.cartId;
         const productId = req.body.productId;
-
+        
         const cart = await Cart.findOne({ user: req.session.userId });
         const product = await Product.findOne({ _id: productId });
 

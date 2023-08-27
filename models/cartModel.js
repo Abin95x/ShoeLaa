@@ -37,7 +37,7 @@ const cartSchema = new mongoose.Schema({
             
         },
         offerEndTime: {
-            type: Date,
+            type: String,
             required: true
         },
         
