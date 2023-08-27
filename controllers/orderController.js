@@ -32,9 +32,7 @@ const cancelOrder = async (req, res, next) => {
       if (payment === "RazorPay") {
         const totalAmount = parseFloat(total);
         
-        user.wallet.push({ date: new Date(), amount: totalAmount });
-      
-        user.walletHistory.push({ date: new Date(), amount: totalAmount });
+        user.wallet += totalAmount;
       
         await user.save();
       }
