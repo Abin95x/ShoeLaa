@@ -1,0 +1,130 @@
+<%- include("./layout/adminHeader.ejs") %>
+<style>
+    .product-image {
+      width: 200px;
+      height: 200px;
+    }
+    .product {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.product-container {
+  display: flex;
+}
+
+.product-image {
+  width: 100px; /* Adjust this as needed */
+  height: 100px; /* Adjust this as needed */
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px; /* Adjust this as needed to add space between image and details */
+}
+
+.product-name {
+  font-weight: bold;
+}
+
+.product-price,
+.product-quantity {
+  margin-top: 5px;
+}
+
+.product-actions {
+  margin-top: 10px;
+}
+
+    .product-box {
+      border: 5px solid #ccc;
+      padding: 20px;
+      max-width: 400px;
+      text-align: center;
+      margin-left: 300px;
+      margin-top: 170px;
+      
+    }
+
+
+
+  </style>
+
+<div class="flex">
+    <%- include("./layout/adminSidebar.ejs") %>
+
+    <div class="right">
+        <%- include("./layout/adminNavbar.ejs") %>
+        <div class="product-box">
+            <h1>Product Offer Page</h1>
+            <br>
+            <% if (products) { %>
+              <div>
+                <h3><%= products.name %></h3>
+                <p>Price: $<%= products.price %></p>
+                <p>Stock: <%= products.quantity %></p>
+                <form action="/admin/addOffer/<%= products._id %>" method="post" onsubmit="return validateForm()">
+                  <% if (products.offerPrice && products.price!==products.offerPrice) { %>
+                      <input type="number" name="percentage" id="percentage" placeholder="<%= products.offerPrice %>" required />
+              
+                  <% } else { %>
+                      <input type="number" name="percentage" id="percentage" placeholder="Enter your offer percentage" required />
+              
+                  <% } %>
+                  <input type="date" id="offerDate" name="offerDate" required />
+                  
+                  <% if (products.offerPrice && products.price!==products.offerPrice) { %>
+                    
+                    <a href="/admin/removeOffer/<%= products._id %>" style="color: yellow;" class="btn btn-warning">Remove Offer</a>
+              
+                  <% } else { %>
+              
+                      <button type="submit" class="btn btn-primary">Add Offer</button>
+              
+                  <% } %>
+              
+                  <br><br>
+              </form>
+              </div>
+            <% } else { %>
+              <p>No products found.</p>
+            <% } %>
+          </div>
+          
+          
+
+             
+    
+    </div>
+
+</div>
+
+
+  
+  
+<script>
+   function validateForm() {
+        const percentage = document.getElementById('percentage').value;
+        const offerDate = document.getElementById('offerDate').value;
+        
+        if (percentage === '') {
+            alert('Please enter a percentage.');
+            return false;
+        }
+        
+        if (offerDate === '') {
+            alert('Please select an offer date.');
+            return false;
+        }
+        
+        // You can add more custom validation rules if needed
+        
+        return true; // Form will be submitted
+    }
+</script>
+
+
+
+<%- include("./layout/adminFooter.ejs") %>

@@ -1,0 +1,105 @@
+<%- include("./layout/adminHeader.ejs") %>
+<style>
+  /* Add appropriate styling to your existing CSS file */
+
+.banner-list {
+    padding: 20px;
+}
+
+.banner-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.banner-item {
+    background-color: #130e0e;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.banner-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.banner-details h3 {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+.banner-details p {
+    margin-top: 5px;
+    font-size: 1rem;
+}
+
+.banner-actions {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+
+    .edit-button,
+.unlist-button {
+    display: inline-block;
+    padding: 10px 15px;
+    margin-right: 10px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button:hover,
+.unlist-button:hover {
+    background-color: #0056b3;
+}
+
+}
+
+</style>
+
+<div class="flex">
+    <%- include("./layout/adminSidebar.ejs") %>
+
+    <div class="right">
+        <%- include("./layout/adminNavbar.ejs") %>
+
+        
+        <div class="banner-list">
+          <h2>Banner List</h2>
+          <% if (bannerData.length === 0) { %>
+              <p>No banners available.</p>
+          <% } else { %>
+              <div class="banner-grid">
+                  <% bannerData.forEach(banner => { %>
+                      <div class="banner-item">
+                          <div class="banner-image">
+                              <img src="/admin_assets/product/<%= banner.image[0] %>" alt="<%= banner.title %> image">
+                          </div>
+                          <div class="banner-details">
+                              <h3><%= banner.title %></h3>
+                              <p><%= banner.discription %></p>
+                              <div class="banner-actions">
+                                  <a href="/admin/editBanner/<%= banner.id %>" class="edit-button">Edit</a>
+      
+                                  <% if (banner.status === true) { %>
+                                      <a href="/admin/unlistBanner?id=<%= banner.id %>" class="unlist-button">Unlist</a>
+                                  <% } else { %>
+                                      <a href="/admin/unlistBanner?id=<%= banner.id %>" class="unlist-button">List</a>
+                                  <% } %>
+                              </div>
+                          </div>
+                      </div>
+                  <% }); %>
+              </div>
+          <% } %>
+      </div>
+      
+    </div>
+</div>
+
+<%- include("./layout/adminFooter.ejs") %>

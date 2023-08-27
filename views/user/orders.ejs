@@ -1,0 +1,168 @@
+<%- include("./layout/header.ejs") %>
+
+<style>
+    .invoice-btn{
+        display: inline-block;
+        margin-top: 30px;
+        padding: 5px 5px;
+        background-color: #0059ff;
+        color: #fff;
+        text-decoration: none;
+        font-size: 15px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+</style>
+
+
+<!-- navbar -->
+
+<div id="page">
+    <nav class="colorlib-nav" role="navigation">
+        <div class="top-menu">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-7 col-md-9">
+                        <div id="colorlib-logo"><a href="/">Shoe Laa</a></div>
+                    </div>
+                    <div class="col-sm-5 col-md-3">
+                    <form action="/productsList" class="search-wrap">
+                       <div class="form-group">
+                          <input type="search" class="form-control search" placeholder="Search">
+                          <button class="btn btn-primary submit-search text-center" type="submit"><i class="icon-search"></i></button>
+                       </div>
+                    </form>
+                 </div>
+             </div>
+                <div class="row">
+                    <div class="col-sm-12 text-left menu-1">
+                        <ul>
+                            <li class="active"><a href="/">Home</a></li>
+                            
+                            
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li class="cart">
+				         	</li><li class="cart"><a href="/userProfile"><i class="icon-profile"></i> Profile </a></li> 
+
+                            <li class="cart"><a href="/cart"><i class="icon-shopping-cart"></i> Cart </a></li>
+                            <li class="cart"><a href="/wishlist"><i class=""></i> wishlist </a></li>								
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sale">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 offset-sm-2 text-center">
+                        <div class="row">
+                            <div class="owl-carousel2">
+                                <div class="item">
+                                    <div class="col">
+                                        <h3><a href="#">25% off (Almost) Everything! Use Code: Summer Sale</a></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+  <br>
+  <div style="max-width: 800px; margin: 0 auto;">
+    <% if (orderData.length === 0) { %>
+        <h4 style="text-align: center;">No Orders</h4>
+    <% } else { %>
+    <h1 style="text-align: center; margin-bottom: 20px;">Your Orders</h1>
+
+        <% orderData.reverse().forEach(order => { %>
+            <div style="border: 1px solid #ddd; margin-bottom: 20px; padding: 10px;">
+                <h5>Order ID: <%= order._id %> </h5>
+                <p style="color: green;;"></pstyle><%= order.payment%></p> 
+
+                <table style="width: 100%;">
+                    <tr style="background-color: #f7f7f7;">
+                        <th >Product Name </th>
+                        <th >Product Image</th>
+                        <th >Quantity</th>
+                        <th >Price</th>
+                        <th >Order Date</th>
+                        <th >Delivery Date</th>
+                        <th >Status</th>
+                        <th style="padding: 10px;">Action</th>
+                    </tr>
+                    <% order.products.forEach(item => { %>
+
+                        <tr>
+                            <td style="padding-left: 20px;"><%= item.productId.name %> </td>
+
+                            <td style="text-align: center;">
+                                <a href="/orderDetails?id=<%= item.productId.id %>" style="color: #d400ff; padding-right: 20px;">
+                                    <img src="/admin_assets/product/<%= item.productId.image[0] %>"
+                                    alt="<%= item.productId.name %>" style="height: 70px; width: 70px;">
+                                </a>
+                               
+                                    
+                            </td>
+                            <td style="padding-left: 25px;"><%= item.quantity %></td>
+                            <td><%= item.totalPrice %></td>
+                            <td><%= moment(order.date).format('YYYY-MM-DD') %></td>
+                            <td style="padding-left: 12px;"><%= moment(order.expectedDelivery).format('YYYY-MM-DD') %></td>
+                            <td ><%= item.status %></td>
+
+                            <td>
+
+                                
+                                
+                                <% if (item.status === "cancelled") { %>
+                                    <h6 style="color: red;">Cancelled</h6>
+                                <% } else if (item.status === "Delivered") { %>
+                                    <a href="/returnOrder?orderId=<%= order._id %>&productId=<%= item.productId._id %>&quantity=<%= item.quantity %>&total=<%= item.totalPrice %>&orderid=<%= item._id %>"
+                                        style="color: #000000; background-color: rgb(255, 166, 0); padding: 6px 12px; text-decoration: none;">Return</a>
+                                <% } else if (item.status === "Returned") { %>
+                                    <h6 style="color: rgb(255, 166, 0);">Returned</h6>
+                                <% } else { %>
+                                    <a href="/cancelOrder?orderId=<%= order._id %>&productId=<%= item.productId._id %>&quantity=<%= item.quantity %>&total=<%= item.totalPrice %>&orderid=<%= item._id %>&payment=<%= order.payment %>"
+                                        style="color: #fff; background-color: #e74c3c; padding: 6px 12px; text-decoration: none;">Cancel</a>
+                                <% } %>    
+                                
+                                
+
+                            </td>
+                            
+                        </tr>
+                        
+                    <% }); %>
+
+                </table>
+
+                
+              
+                <a href="/invoice?orderId=<%=order._id  %>"  class="invoice-btn">Download Invoice</a>
+                <h6 style="color: green; padding-left: 670px;">Total: <%= order.totalAmount%></h6> 
+                
+
+
+
+                
+            </div>
+        <% }); %>
+    <% } %>
+</div>
+
+
+
+
+    
+    
+
+</div>
+
+
+
+
+
+
+<%- include("./layout/footer.ejs") %>

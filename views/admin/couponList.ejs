@@ -1,0 +1,35 @@
+<%- include("./layout/adminHeader.ejs") %>
+
+<style>
+    li strong {
+        color: #7c7777;
+    }
+</style>
+
+<div class="flex">
+    <%- include("./layout/adminSidebar.ejs") %>
+
+    <div class="right">
+        <%- include("./layout/adminNavbar.ejs") %>
+
+        <h1 style="text-align: center;">Coupon List</h1>
+
+        <% if (couponData) { %>
+            <% couponData.forEach(coupon => { %>
+                <li style="background-color: #000000; padding: 10px; border: 1px solid;">
+                    <strong>Coupon Code:</strong> <%= coupon.code %><br>
+                    <strong>Discount:</strong> <%= coupon.discountPercentage %>%<br>
+                    <strong>Starting Date:</strong> <%= coupon.startDate %><br>
+                    <strong>Expiration Date:</strong> <%= coupon.expireDate %><br>
+                    <a href="/admin/couponEdit?id=<%= coupon._id %>" style="color: white;" class="btn btn-primary">Edit</a>
+                    <a href="/admin/couponDelete?id=<%= coupon._id %>" style="color: white;" class="btn btn-danger">Delete</a>
+                </li>
+                <br>
+            <% }); %>
+        <% } else { %>
+            <h4>NO COUPONS...</h4>
+        <% } %>
+    </div>
+</div>
+
+<%- include("./layout/adminFooter.ejs") %>

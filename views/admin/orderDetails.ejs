@@ -1,0 +1,75 @@
+<%- include("./layout/adminHeader.ejs") %>
+<style>
+  /* Add border to all tables */
+  .table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  /* Add border to table cells */
+  .table td, .table th {
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+</style>
+
+
+<div class="flex">
+  <%- include("./layout/adminSidebar.ejs") %>
+  
+  <div class="right">
+    <%- include("./layout/adminNavbar.ejs") %>
+    
+    <div class="row row-pb-lg product-detail-wrap">
+      <div class="col-sm-5 d-flex justify-content-center align-items-center">
+        <table class="table">
+          <thead>
+            <tr>
+             
+            </tr>
+          </thead>
+          <tbody>
+            <% product.image.forEach((image) => { %>
+              <tr>
+                <td>
+                  <div class="image-container">
+                    <img class="mt-2" src="/admin_assets/product/<%= image %>" alt="no image" style="height: 200px; width: 200px;">
+                  </div>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-sm-7">
+        <div class="product-desc">
+          <h3><%= product.name %></h3>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>Price:</td>
+                <td>
+                  <% if (product.offerPrice && product.offerPrice !== product.price && new Date(product.offerEndTime) > new Date()) { %>
+                    <span>₹ <%= product.offerPrice %></span>
+                    <span style="text-decoration: line-through; color: red;">₹ <%= product.price %></span>
+                  <% } else { %>
+                    <span>₹ <%= product.price %></span>
+                  <% } %>
+                </td>
+              </tr>
+              <tr>
+                <td>Quantity:</td>
+                <td><%= product.quantity %> Items left</td>
+              </tr>
+              <tr>
+                <td>Description:</td>
+                <td><%= product.description %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

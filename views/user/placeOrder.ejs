@@ -1,0 +1,53 @@
+
+<%- include("./layout/header.ejs") %>
+
+
+
+
+
+
+
+<div class="colorlib-product">
+    <div class="container">
+        <div class="row row-pb-lg">
+            <div class="col-sm-10 offset-md-1">
+                <div class="process-wrap">
+                    <div class="process text-center active">
+                        <p><span>01</span></p>
+                        <h3>Shopping Cart</h3>
+                    </div>
+                    <div class="process text-center active">
+                        <p><span>02</span></p>
+                        <h3>Checkout</h3>
+                    </div>
+                    <div class="process text-center active">
+                        <p><span>03</span></p>
+                        <h3>Order Complete</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-10 offset-sm-1 text-center ">
+                <p class="icon-addcart"><span><i class="icon-check"></i></span></p>
+                <h2 class="mb-4" style="color: green;">Thank you for purchasing, Your order is complete</h2>                
+                <h4 class="mb-4">Your Order ID - <%= orderId %></h4>
+                <h4 class="mb-4" style="color: rgb(119, 0, 255);">Total amount - ₹<%= total %> </h4>
+                <h4 class="mb-4" style="color: rgb(50, 42, 165);">Delivery Address - <%= deliveryAddress %> </h4>
+                <!-- <h5 class="mb-4">Order Date - <%= orderDate %> </h5> -->
+                <h5 class="mb-4">Expected delivery - <%= deliveryDate %></h5>
+                
+                <p>
+                    <a href="/"class="btn btn-primary btn-outline-primary">Home</a>
+                    <a href="/"class="btn btn-primary btn-outline-primary"><i class="icon-shopping-cart"></i> Continue Shopping</a>
+                    <a href="/loadOrder"class="btn btn-primary btn-outline-primary">Orders</a>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <%- include("./layout/footer.ejs") %>

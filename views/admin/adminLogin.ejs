@@ -1,0 +1,120 @@
+<%- include("./layout/adminHeader.ejs") %>
+    <body>
+        <main>
+            <header class="main-header style-2 navbar">
+                <div class="col-brand">
+                    <h4>ADMIN</h4>
+                </div>
+              
+            </header>
+            <style>
+                .stylish-button {
+                    width: 8.1cm;
+                    background-color: #15ff00;
+                    border: 1px solid #e504f9;
+                    color: rgb(94, 92, 92);
+                    font-size: 16px;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease;
+                }
+            
+                .stylish-button:hover {
+                    background-color: #00ff8d;
+                }
+
+                .stylish-button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                }
+
+/* Style the login text within the button */
+.login-text {
+  /* You can adjust the line-height and other styles as needed */
+  line-height: 1; /* To vertically center the text */
+}
+
+
+            </style>
+            
+
+            <section class="content-main mt-80 mb-80">
+                <div class="card mx-auto card-login">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4">Login</h4>
+                        <!-- <form id="loginForm" action="/admin/adminVerify" method="post">
+                            <% if (typeof message1 !== 'undefined') { %>
+                                <h5 style="color: rgb(255, 8, 0);"><%= message1 %></h5>
+                            <% } %>
+                            <% if (typeof message2 !== 'undefined') { %>
+                                <h5 style="color: rgb(255, 8, 0);"><%= message2 %></h5>
+                            <% } %>
+                            <div class="mb-3">
+                                <input id="emailInput" class="form-control" placeholder="Email" name="email" type="text" required/>
+                            </div>
+                            <div class="mb-3">
+                                <input id="passwordInput" class="form-control" placeholder="Password" name="password" type="password" required />
+                            </div>
+                            <br>
+                            <div class="mb-4">
+                                <button id="submitButton" type="submit" class="btn btn-primary w-100">Login</button>
+                            </div> -->
+                            <% if (typeof message1 !== 'undefined') { %>
+                                <h5 style="color: rgb(255, 8, 0);"><%= message1 %></h5>
+                            <% } %>
+                            <% if (typeof message2 !== 'undefined') { %>
+                                <h5 style="color: rgb(255, 8, 0);"><%= message2 %></h5>
+                            <% } %>
+                            <form action="/admin/adminVerify" method="post" onsubmit="return validateForm()">
+                                <div class="form-group">
+                                    <input type="text" id="email" name="email" class="form-control" placeholder="Enter Admin Email Address" required>
+                                </div>
+                                <br>
+                            
+                                <div class="form-group">
+                                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" required>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary stylish-button">
+                                      <span class="login-text">Login</span>
+                                    </button>    
+                                  </div>                                  
+                            </form>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        
+        
+        <script src="/admin_assets/js/vendors/jquery-3.6.0.min.js"></script>
+        <script src="/admin_assets/js/vendors/bootstrap.bundle.min.js"></script>
+        <script src="/admin_assets/js/vendors/jquery.fullscreen.min.js"></script>
+        <!-- Main Script -->
+        <script src="/admin_assets/js/main.js?v=1.1" type="text/javascript"></script>
+        
+        <script>
+            function validateForm() {
+                // Get the values entered by the user
+                var email = document.getElementById("email").value;
+                var password = document.getElementById("password").value;
+        
+                // Perform validation
+                if (email.trim() === "") {
+                    alert("Please enter an email address.");
+                    return false;
+                }
+        
+                if (password.trim() === "") {
+                    alert("Please enter a password.");
+                    return false;
+                }
+    
+                return true;
+            }
+        </script>
+   
+<%- include("./layout/adminFooter.ejs") %>

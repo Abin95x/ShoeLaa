@@ -1,0 +1,35 @@
+
+
+  <%- include("./layout/adminHeader.ejs") %>
+
+<div class="flex">
+
+    <%- include("./layout/adminSidebar.ejs") %>
+
+    <div class="right">
+        <%- include("./layout/adminNavbar.ejs") %>
+        <div class="banner-form" style="max-width: 600px; margin: 0 auto; background-color: #000000; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+          <h2 style="margin-bottom: 10px; font-size: 24px;">Add Banner</h2>
+          <form action="/admin/addBanner" method="post" enctype="multipart/form-data">
+            <div class="form-group" style="margin-bottom: 15px;">
+              <label for="title" style="display: block; font-weight: bold;">Banner Title</label>
+              <input type="text" id="title" name="title" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <label for="discription" style="display: block; font-weight: bold;">Banner Description</label>
+              <textarea id="discription" name="discription" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;"></textarea>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px;">
+              <label for="image" style="display: block; font-weight: bold;">Banner Image</label>
+              <input type="file" id="image" name="image" accept="image/*" required style="border: none;" multiple>
+            </div>
+            <button type="submit" style="background-color: #007bff; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Add Banner</button>
+          </form>
+          
+        </div>
+        
+    </div>
+</div>
+
+
+<%- include("./layout/adminFooter.ejs") %>

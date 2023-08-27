@@ -1,0 +1,159 @@
+<%- include("./layout/adminHeader.ejs") %>
+
+<div class="flex">
+
+  <%- include("./layout/adminSidebar.ejs") %>
+
+  <div class="right">
+    
+    <%- include("./layout/adminNavbar.ejs") %>
+    
+    <title>Edit Product</title>
+    <style>
+      /* CSS styles */
+      .edit-form {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    
+      .form-group {
+        margin-bottom: 20px;
+      }
+    
+      .form-label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+    
+      .form-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+    
+      .form-submit {
+        display: inline-block;
+        padding: 6px 12px;
+        background-color: #4caf50;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+      }
+    
+      .form-submit:hover {
+        background-color: #45a049;
+      }
+      h1 {
+    text-align: center;
+  }
+  .image-row {
+  display: flex;
+  flex-direction: row;
+}
+
+     
+    </style>
+    
+    <h1>Edit Product</h1>
+    <br>
+    <form class="edit-form" action="/admin/productEdit/<%= product._id %>" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label class="form-label" for="name">Product Name</label>
+        <input class="form-input" type="text" id="name" name="name" value="<%= product.name %>" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="price">Price</label>
+        <input class="form-input" type="number" id="price" name="price" value="<%= product.price %>" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="description">Description</label>
+        <textarea class="form-input" id="description" name="description" rows="4" required><%= product.description %></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="quantity">Quantity</label>
+        <input class="form-input" type="number" id="Quant" name="quantity" value="<%= product.quantity %>" >
+      </div>
+
+      <div>
+        <label class="form-label" for="listed">Category</label>
+        <select id="category" name="category" required>
+            <% if (category.length === 0) { %>
+              <option value="">No categories available</option>
+            <% } else { %>
+              <% category.forEach(category => { %>
+                <option value="<%= category._id %>"><%= category.name %></option>
+              <% }) %>
+            <% } %>
+          </select>
+      </div>
+      <br>
+      <div>
+        <label for="image" class="form-label" >Product Image</label>
+        <input type="file"  id="image-input" name="img" accept=".jpg, .jpeg, .png" multiple>
+        
+        <div class="image-row">
+          <% for (let index = 0; index < product.image.length; index++) { %>
+            <div class="image-container">
+              <img class="mt-2" src="/admin_assets/product/<%= product.image[index] %>" 
+                alt="no image" style="height: 90px; width: 90px;">
+              <br>
+              <button class="btn btn-danger" data-index="<%= index %>"
+                data-product-id="<%= product._id %>" data-image="<%= product.image[index] %>">
+                <a href="/admin/imgDelete/<%= product.image[index] %>/<%= product._id %>">Delete</a>
+             </button>
+        
+            </div>
+          <% } %>
+        </div>  
+      <br>
+      <button type="submit" class="form-submit">Save Changes</button>
+      <br>
+    </form> 
+  </div>
+</div>
+
+<script>
+  const imageInput = document.getElementById('image-input');
+  const imagePreview = document.getElementById('image-preview');
+  const errorMessage = document.getElementById('error-message');
+
+  imageInput.addEventListener('change', () => {
+    const file = imageInput.files[0];
+    if (!file) {
+      errorMessage.textContent = '';
+      imagePreview.innerHTML = '';
+      return;
+    }
+
+    const validExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+    const isValid = validExtensions.includes(`.${fileExtension}`);
+
+    if (!isValid) {
+      errorMessage.textContent = 'Invalid file format. Only JPG, JPEG, PNG, and GIF images are allowed.';
+      imagePreview.innerHTML = '';
+      return;
+    }
+
+    errorMessage.textContent = '';
+    showImagePreview(file);
+  });
+
+  function showImagePreview(file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.src = e.target.result;
+      img.style.maxWidth = '100%';
+      img.style.maxHeight = '100%';
+      imagePreview.innerHTML = '';
+      imagePreview.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  }
+</script>
+
+
+<%- include("./layout/adminFooter.ejs") %>

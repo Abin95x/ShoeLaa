@@ -1,0 +1,76 @@
+<%- include("./layout/adminHeader.ejs") %>
+
+
+<div class="flex">
+    <%- include("./layout/adminSidebar.ejs") %>
+
+    <div class="right">
+        <%- include("./layout/adminNavbar.ejs") %>
+
+        <div style="max-width: 1040px; margin: 0 auto;">
+          <h1 style="text-align: center; margin-bottom: 20px;">Orders</h1>
+          <% if (orderData.length === 0) { %>
+              <h4 style="text-align: center;">No Orders</h4>
+          <% } else { %>
+              <% orderData.reverse().forEach(order => { %>
+                  <div style="border: 15px solid #ddd; margin-bottom: 20px; padding: 10px;">
+                      <h5>User Name: <%= order.userName %></h5>
+                      <h5>Order ID: <%= order._id %></h5>
+                      <table style="width: 100%; border-collapse: collapse;">
+                          <tr style="background-color: #363434;">
+                              <th style="width: 15%; border: 1px solid #fff;">Product ID</th>
+                              <th style="width: 15%; border: 1px solid #fff;">Product Name</th>
+                              <th style="width: 10%; border: 1px solid #fff;">Quantity</th>
+                              <th style="width: 10%; border: 1px solid #fff;">Price</th>
+                              <th style="width: 15%; border: 1px solid #fff;">Order Date</th>
+                              <th style="width: 15%; border: 1px solid #fff;">Delivery Date</th>
+                              <th style="width: 15%; border: 1px solid #fff;">Status</th>
+                              <th style="width: 15%; border: 1px solid #fff;">Update Status</th>
+                          </tr>
+                          <% order.products.forEach(item => { %>
+                              <tr style="border: 1px solid #ddd;">
+                                  <td style="border: 1px solid #ddd;"><%= item.id %></td>
+                                  <td style="border: 1px solid #ddd;"><%= item.productId.name %> <a href="/admin/adminOrder?id=<%= item.productId.id %>">details</a></td>
+                                  <td style="border: 1px solid #ddd;"><%= item.quantity %></td>
+                                  <td style="border: 1px solid #ddd;"><%= item.totalPrice %></td>
+                                  <td style="border: 1px solid #ddd;"><%= moment(order.date).format('YYYY-MM-DD') %></td>
+                                  <td style="border: 1px solid #ddd;"><%= moment(order.expectedDelivery).format('YYYY-MM-DD') %></td>
+
+                                  <td style="border: 1px solid #ddd;"><%= item.status %></td>
+                                  <td>
+
+                                    <form action="/admin/updateOrderStatus" method="post">
+                                        <input type="hidden" value="<%= order._id %>" name="orderId"> <!-- Corrected: Use "orderId" instead of "oid" -->
+                                        <input type="hidden" value="<%= item.id %>" name="productId"> <!-- Corrected: Use "productId" instead of "pid" -->
+                                        <select class="btn btn-light rounded btn-xs p-0 pb-1 pt-1 font-sm selectRemove" id="updateDropdown" name="status"> <!-- Corrected: Add "name" attribute to select field -->
+                                          <option value="" selected disabled>Update</option>
+                                          <option value="Placed">Placed</option>
+                                          
+                                          <option value="Delivered">Delivered</option>
+                                          <option value="Delivered">Returned</option>
+                                        </select>
+                                        <button class="btn btn-primary" type="submit">Update</button>
+                                    </form>
+
+                                  </td>
+                                    
+                              </tr>
+                          <% }); %>
+                      </table>
+                      <br>
+                      <h6 style="color: green;">Total: <%= order.totalAmount %></h6>
+                  </div>
+              <% }); %>
+          <% } %>
+      </div>
+      
+     
+    </div>
+</div>
+
+
+  
+
+
+
+<%- include("./layout/adminFooter.ejs") %>

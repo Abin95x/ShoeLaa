@@ -1,0 +1,108 @@
+<%- include("./layout/adminHeader.ejs") %>
+
+<div class="flex">
+
+<%- include("./layout/adminSidebar.ejs") %>
+
+  <div class="right">
+
+    <%- include("./layout/adminNavbar.ejs") %>
+    
+    <form action="/admin/editBanner" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <input type="hidden" name="id" value="<%= banner._id %>" />
+        <label for="title">Title:</label>
+        <input type="text" class="form-control" id="title" name="title" value="<%= banner.title %>" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <!-- <textarea class="form-control" id="discription" name="discription" rows="4" value="<%= banner.discription %>" required></textarea> -->
+        <input type="text" class="form-control" id="discription" name="discription" value="<%= banner.discription %>" required>
+
+      </div>
+      <div class="form-group">
+        <label for="image">Image:</label>
+        <div class="image-row">
+          <% for (let i = 0; i < banner.image.length; i++) { %>
+            <div class="col-md-3 col-sm-6 mb-4">
+              <div class="image-container">
+                <img class="" id="prdtimage_<%= i %>" src="/admin_assets/product/<%= banner.image[i] %>" alt="Banner Image">
+                <a href="#" onclick="deleteImg(event, '<%= banner.image[i] %>', '<%= banner._id %>')" class="btn btn-danger btn-sm delete-button mt-2">Delete</a>
+              </div>
+            </div>
+          <% } %>
+        </div>
+        <input type="file" class="form-control-file mt-2" id="image" name="image" accept="image/*">
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </div>
+    </form>
+    
+  
+
+  </div>
+
+</div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+	
+
+<script>
+  function deleteImg(event, imageName, bannerId) {
+      event.preventDefault();
+      console.log("1");
+      Swal.fire({
+          title: 'Delete Image',
+          text: 'Are you sure you want to delete this image?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Yes, delete it!',
+      }).then((result) => {
+          if (result.isConfirmed) {
+              $.ajax({
+                  url: '/admin/deleteBannerImage',
+                  method: 'patch',
+                  data: {
+                      image: imageName,
+                      id: bannerId,
+                  },
+                  success: (response) => {
+                      if (response.success) {
+                          Swal.fire({
+                              text: 'Image deleted successfully!',
+                              icon: 'success',
+                          }).then(() => {
+                              location.reload(); // Reload the page after successful deletion
+                          });
+                      } else {
+                          Swal.fire({
+                              title: 'Oops...!',
+                              text: response.message,
+                              icon: 'warning',
+                          });
+                      }
+                  },
+                  error: (err) => {
+                      Swal.fire({
+                          title: 'Error..!',
+                          text: 'An error occurred while deleting the image.',
+                          icon: 'error',
+                      });
+                  },
+              });
+          }
+      });
+      console.log("2");
+  }
+  </script>
+  
+
+
+<%- include("./layout/adminFooter.ejs") %>
+

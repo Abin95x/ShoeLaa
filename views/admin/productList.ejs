@@ -1,0 +1,215 @@
+<%- include("./layout/adminHeader.ejs") %>
+
+<div class="flex">
+
+    <%- include("./layout/adminSidebar.ejs") %>
+
+    <div class="right">
+        <%- include("./layout/adminNavbar.ejs") %>
+        
+        
+        <div class="page-content">
+            <!-- Main content of the page -->
+        <title>Product List</title>
+        
+        <h1 class="center" >Product List</h1>
+        
+        
+        <br>
+        
+        <table class="product-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>offer Price</th>
+              <th>Qantity</th>
+              <!-- <th>Category</th> -->
+              <th>Action</th>
+            </tr>
+          </thead>
+              <tbody>
+                <% products.forEach(function(product) { %>
+                <tr>
+                  <td>
+                    <img class="product-image" src="/admin_assets/product/<%= product.image[0] %>" alt="<%= product.name %>">
+                  </td>
+                  <td class="product-name"><%= product.name %></td>
+                  <td class="product-price">₹<%= product.price %></td>
+                <% if(product.offerPrice && product.offerPrice !== product.price) { %>
+                  <td class="product-price" style="color: #00ff0d;">₹<%= product.offerPrice %></td>
+                <% } else {%>
+                    <td style="color: #ffc400;">no offers</td>
+                <%  }   %>
+                  <td class="product-price"><%= product.quantity %></td>
+
+
+
+                  <td>
+                    <a href="/admin/productEdit/<%= product._id %>" class="edit-button">Edit</a>
+                    <% if(product.offerPrice && product.offerPrice !== product.price) { %>
+
+                      <a href="/admin/removeOffer/<%= product._id %>" style="color: yellow;" class="btn btn-warning">Remove Offer</a>
+
+                <% } else {%>
+
+                  <a href="/admin/productOffer/<%= product._id %>" class="offer-button"> Add Offer</a>
+
+                <%  }   %>
+
+
+
+                    <% if (product.blocked === false) { %>
+                    <a href="/admin/unlistProduct?id=<%= product._id %>"> <button type="submit" class="unlist-button">unlist</button></a>
+                    <% } else { %>
+                    <a href="/admin/unlistProduct?id=<%= product._id %>"> <button type="submit" class="list-button">List</button></a>
+                    <% } %>
+                  </td>
+                </tr>
+                <% }); %>
+              </tbody>
+              
+        </table>
+        
+            <style>
+              
+              .product-table {
+                width: 100%;
+                border-collapse: collapse;
+              }
+            
+              .product-table thead {
+                background-color: #f2f2f2;
+              }
+            
+              .product-table th,
+              .product-table td {
+                padding: 10px;
+                text-align: center; 
+                border-bottom: 1px solid #ccc;
+              }
+            
+              .product-image {
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                border-radius: 4px;
+              }
+            
+              .product-name {
+                font-weight: bold;
+              }
+            
+              .edit-button {
+                display: inline-block;
+                padding: 12px 23px;
+                background-color: #0059ff;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 4px;
+              }
+              .offer-button {
+                display: inline-block;
+                padding: 12px 23px;
+                background-color: #66ff00;
+                color: #000000;
+                text-decoration: none;
+                border-radius: 4px;
+              }
+            
+              .edit-button:hover {
+                background-color: #ffc400;              }
+              .offer-button:hover {
+                background-color: #a7ee00;
+              }
+            
+              
+            
+              .unlist-button {
+                background-color: #d9534f;
+              }
+            
+              .list-button:hover,
+              .unlist-button:hover {
+                background-color: #ffc400;
+              }
+            
+              .inline-form {
+                display: inline-block;
+              }
+            
+              
+              .unlist-button {
+                background-color: #f56642;
+                color: #000000;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+              }
+              .list-button{
+                background-color: #00ff2a;
+                color: #000000;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+              }
+            
+              .list-button:hover,
+              .unlist-button:hover {
+                background-color: #ffc400;
+              }
+              .center{
+                text-align: center;
+              }
+            
+            </style>
+        
+            <div class="form-container">
+              <!-- Your form code here -->
+            </div>
+          </div>
+        </div>
+
+    </div>
+    <br>
+
+    <div class="row" style="padding-left: 300px;">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="pagination justify-content-center">
+          <% if (currentPage > 1) { %>
+            <li class="page-item">
+            <a class="page-link" href="?page=<%= currentPage - 1 %>" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+            </li>
+          <% } %>
+          <% for (let i = 1; i <= totalPages; i++) { %>
+            <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+            <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+            </li>
+          <% } %>
+          <% if (currentPage < totalPages) { %>
+            <li class="page-item">
+            <a class="page-link" href="?page=<%= currentPage + 1 %>" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+            </li>
+          <% } %>
+          </ul>
+        </div>
+        </div>
+      </div>
+      <br>
+</div>
+
+
+
+
+
+<%- include("./layout/adminFooter.ejs") %>

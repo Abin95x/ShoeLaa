@@ -1,0 +1,137 @@
+
+<%- include("./layout/adminHeader.ejs") %>
+
+<div class="flex">
+  <%- include("./layout/adminSidebar.ejs") %>
+
+  <div class="right">
+    <%- include("./layout/adminNavbar.ejs") %>
+    
+    <title>Add Product</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+    
+      h1 {
+        text-align: center;
+      }
+    
+      form {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+    
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+      }
+    
+      input[type="file"] {
+        margin-top: 5px;
+      }
+    
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+    
+    
+    <h1>Add Product</h1>
+    
+    <form action="/admin/productAdd" method="POST" enctype="multipart/form-data">
+        <label for="name">Product Name:</label>
+        <input type="text" id="name" name="name" required>
+      
+        <label for="description">Product Description:</label>
+        <textarea id="description" name="description" required></textarea>
+      
+        <!-- <label for="img">Product Image:</label>
+        <input type="file" id="img" name="img" multiple required> -->
+        <label for="image" class="form-label" >Product Image</label>
+        <input type="file"  id="image-input" name="img" accept=".jpg, .jpeg, .png" multiple required>
+        
+      
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required>
+      
+        <label for="category">Category:</label>
+        <select id="category" name="category" required>
+          <% for ( let category of categoryData) { %>
+            <option value="<%= category._id %>"><%= category.name %></option>
+          <% } %>
+        </select>
+      
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required>
+      
+        <input type="submit" value="Add Product">
+      </form>
+  </div>
+</div>
+
+<script>
+  const imageInput = document.getElementById('image-input');
+  const imagePreview = document.getElementById('image-preview');
+  const errorMessage = document.getElementById('error-message');
+
+  imageInput.addEventListener('change', () => {
+    const file = imageInput.files[0];
+    if (!file) {
+      errorMessage.textContent = '';
+      imagePreview.innerHTML = '';
+      return;
+    }
+
+    const validExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+    const isValid = validExtensions.includes(`.${fileExtension}`);
+
+    if (!isValid) {
+      errorMessage.textContent = 'Invalid file format. Only JPG, JPEG, PNG, and GIF images are allowed.';
+      imagePreview.innerHTML = '';
+      return;
+    }
+
+    errorMessage.textContent = '';
+    showImagePreview(file);
+  });
+
+  function showImagePreview(file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.src = e.target.result;
+      img.style.maxWidth = '100%';
+      img.style.maxHeight = '100%';
+      imagePreview.innerHTML = '';
+      imagePreview.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  }
+</script>
+
+
+<%- include("./layout/adminFooter.ejs") %>
+

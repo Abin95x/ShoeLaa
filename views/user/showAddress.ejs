@@ -1,0 +1,168 @@
+<%- include("./layout/header.ejs") %>
+
+<style>
+    /* Add your custom styles here */
+  
+   
+  
+    .colorlib-nav a {
+      color: #fff;
+      text-decoration: none;
+    }
+  
+    .colorlib-nav a:hover {
+      color: #ff6f61;
+    }
+  
+    /* Sale banner styles */
+    .sale {
+      background-color: #ff6f61;
+      color: #fff;
+      padding: 10px 0;
+      text-align: center;
+    }
+  
+    /* Card styles */
+    .card {
+      background-color: #f8f8f8;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      
+      margin: 300px;
+      margin-top: 0px;
+    }
+  
+    /* Address styles */
+    .card h2 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  
+    .card h5 {
+      margin-bottom: 10px;
+    }
+  
+    .card button.red {
+      background-color: #ff0000;
+      border: none;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      
+    }
+    .card button.green {
+      background-color: #51a8f8;
+      border: none;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      
+    }
+  
+  
+    .card button.green:hover {
+      background-color: #0022e2;
+    }
+    .card button.red:hover {
+      background-color: #ffd900;
+    }
+  
+  </style>
+<!-- navbar -->
+
+<div id="page">
+    <nav class="colorlib-nav" role="navigation">
+        <div class="top-menu">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-7 col-md-9">
+                        <div id="colorlib-logo"><a href="/">Shoe Laa</a></div>
+                    </div>
+                    <div class="col-sm-5 col-md-3">
+                    <form action="/productsList" class="search-wrap">
+                       <div class="form-group">
+                          <input type="search" class="form-control search" placeholder="Search">
+                          <button class="btn btn-primary submit-search text-center" type="submit"><i class="icon-search"></i></button>
+                       </div>
+                    </form>
+                 </div>
+             </div>
+                <div class="row">
+                    <div class="col-sm-12 text-left menu-1">
+                        <ul>
+                            <li class="active"><a href="/">Home</a></li>
+                            <!-- <li class="has-dropdown">
+                            </li> -->
+                            
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li class="cart">
+                            <li class="cart"><a href="/cart"><i class="icon-shopping-cart"></i> Cart </a></li>
+                            <li class="cart"><a href="/wishlist"><i class=""></i> wishlist </a></li>								
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sale">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 offset-sm-2 text-center">
+                        <div class="row">
+                            <div class="owl-carousel2">
+                                <div class="item">
+                                    <div class="col">
+                                        <h3><a href="#">25% off (Almost) Everything! Use Code: Summer Sale</a></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+  <br>
+
+  <div class="card" >
+    <% if (cartAddress && cartAddress.length > 0) { %>
+        <h2 style="color: black;">Shipping Addresses</h2>
+        <form>
+            <ul >
+                <% cartAddress.forEach((address, index) => { %>
+                    <li > 
+                       
+                        Address: 
+                                <%= address.houseName %>,
+                                <%= address.village %>,
+                                <%= address.state %>,
+                                <%= address.country %>,
+                                <%= address.pin %>,
+                                <%= address.country %>
+                                <br>
+                                Mobile: <%= address.mobile%>
+                                <button class="green"> <a href="/editAddress?id=<%=address._id %>">Edit</a> </button>
+                                <button class="red"> <a href="/deleteAddress?id=<%=address._id %>">Delete</a> </button>
+                      
+                    </li> 
+                    <br>  
+                <% }); %>
+                <h5> <a href="/addAddress" style="color: #0022e2;">+ Add address</a> </h5>
+            </ul>
+                <!-- <h5> <a href="/checkOutAddress"  style="color: rgb(0, 162, 255); margin-left: 30px;"> + Add address</a></h5>   -->
+        </form>
+    <% } else { %>
+        <p>No addresses found for this user.</p>
+        <h5> <a href="/addAddress" style="color: #0022e2;">+ Add address</a> </h5>
+
+        <!-- <h5> <a href="/checkOutAddress"  style="color: rgb(0, 162, 255); margin-left: 30px;"> + Add address</a></h5>   -->
+    <% } %> 
+  </div>
+
+
+
+  <%- include("./layout/footer.ejs") %>

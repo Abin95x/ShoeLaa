@@ -1,0 +1,36 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "html-pdf": "^3.0.1",
+    "moment": "^2.29.4",
+    "mongod": "^2.0.0",
+    "mongoose": "^7.3.1",
+    "multer": "^1.4.5-lts.1",
+    "nocache": "^4.0.0",
+    "node": "^20.5.0",
+    "nodemailer": "^6.9.3",
+    "nodemon": "^2.0.22",
+    "npm": "^9.8.1",
+    "puppeteer": "^21.0.3",
+    "razorpay": "^2.9.1",
+    "sharp": "^0.32.4"
+  }
+}
