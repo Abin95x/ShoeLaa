@@ -176,7 +176,7 @@
                   	</div>
                   	<div class="row">
 						<div class="col-sm-6 "> 
-							<button class="primary-btn" onclick="addToCart('<%= product._id%>','<%= product.price %>')">Add to Cart</button>
+							<button class="primary-btn" onclick="addToCart('<%= product._id%>','<%= product.price %>','<%=product.offerPrice%>')">Add to Cart</button>
 						</div>    
 						<div class="col-sm-6 "> 
 							<button class="primary-btnn" onclick="addToWishlist('<%= product._id%>')">Add to Wishlist</button>
@@ -390,15 +390,17 @@
 	<script src="/user_assets/js/main.js"></script>
 
 	<script>
-		function addToCart(productId,productPrice){
+		function addToCart(productId,productPrice,offerPrice){
 			let quantity = document.getElementById('quantity').value
             $.ajax({
                 url: '/addToCart',
                 method: 'post',
                 data: {
                     productId: productId,
-					quantity:quantity,
-					price:productPrice
+					quantity: quantity,
+					price: productPrice,
+					offerPrice: offerPrice
+					
                 },
 				success: (response) => {
                     if (response.success) {

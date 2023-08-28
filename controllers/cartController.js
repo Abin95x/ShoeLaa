@@ -18,19 +18,23 @@ const loadCart = async (req, res , next) => {
 const addToCart = async (req, res, next) => {
     try {
         const productId = req.body.productId;
+        const offerPrice = req.body.offerPrice
+        const quantity = req.body.quantity
         const product = await Product.findOne({ _id: productId });
         const userId = req.session.userId;
         const currentTime = new Date();
         const offerEndDate = new Date(product.offerEndTime);
+        console.log(offerPrice,"offer");
+        console.log(quantity,"q");
 
         let total, grandTotal;
 
         if (product.offerPrice && offerEndDate > currentTime) {
-            total = 1 * product.offerPrice;
-            grandTotal = product.offerPrice;
+            total = quantity * product.offerPrice;
+            grandTotal = quantity *  product.offerPrice;
         } else {
-            total = 1 * product.price;
-            grandTotal = product.price;
+            total = quantity * product.price;
+            grandTotal = quantity *  product.price;
         }
 
         const cart = await Cart.findOne({ user: userId });
@@ -57,7 +61,7 @@ const addToCart = async (req, res, next) => {
                     productId: productId,
                     price: product.price,
                     offerPrice: product.offerPrice,
-                    quantity: 1,
+                    quantity: quantity,
                     totalPrice: total,
                     offerEndTime: offerEndDate
                 });
@@ -74,7 +78,7 @@ const addToCart = async (req, res, next) => {
                         productId: productId,
                         price: product.price,
                         offerPrice: product.offerPrice,
-                        quantity: 1,
+                        quantity: quantity,
                         totalPrice: total,
                         offerEndTime: offerEndDate
                     }
@@ -96,11 +100,19 @@ const change = async (req, res, next) => {
         const count = req.body.count;
         const cartId = req.body.cartId;
         const productId = req.body.productId;
-        
+        const quantity = req.body.quantity
         const cart = await Cart.findOne({ user: req.session.userId });
         const product = await Product.findOne({ _id: productId });
-
         const cartProduct = cart.product.find(product => product.productId.toString() === productId);
+        const offerEndDate = new Date(product.offerEndTime);
+        const currentTime = new Date();
+        let grandTotal;
+
+        if (product.offerPrice && offerEndDate > currentTime) {
+            grandTotal = quantity * product.offerPrice;
+        } else {
+            grandTotal = quantity * product.price;
+        }
 
         if (count == 1) {
             if (cartProduct.quantity < product.quantity) {
@@ -108,14 +120,11 @@ const change = async (req, res, next) => {
                     $inc: {
                         'product.$.quantity': 1,
                         'product.$.totalPrice': product.offerPrice ? product.offerPrice : product.price
+                    },
+                    $set: {
+                        grandTotal: cart.grandTotal + (product.offerPrice ? product.offerPrice : product.price)
                     }
                 };
-
-                if (product.offerPrice) {
-                    updateFields.grandTotal = cart.grandTotal + product.offerPrice;
-                } else {
-                    updateFields.grandTotal = cart.grandTotal + product.price;
-                }
 
                 await Cart.updateOne(
                     { user: req.session.userId, 'product.productId': productId },
@@ -134,15 +143,12 @@ const change = async (req, res, next) => {
                 const updateFields = {
                     $inc: {
                         'product.$.quantity': -1,
-                        'product.$.totalPrice': -product.offerPrice ? product.offerPrice : product.price
+                        'product.$.totalPrice': -(product.offerPrice ? product.offerPrice : product.price)
+                    },
+                    $set: {
+                        grandTotal: cart.grandTotal - (product.offerPrice ? product.offerPrice : product.price)
                     }
                 };
-
-                if (product.offerPrice) {
-                    updateFields.grandTotal = cart.grandTotal - product.offerPrice;
-                } else {
-                    updateFields.grandTotal = cart.grandTotal - product.price;
-                }
 
                 await Cart.updateOne(
                     { user: req.session.userId, 'product.productId': productId },
@@ -160,6 +166,7 @@ const change = async (req, res, next) => {
         next(error);
     }
 };
+
 
 
 const deleteCart = async (req, res, next) => {

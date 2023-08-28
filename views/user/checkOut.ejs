@@ -211,8 +211,6 @@
                             <% coupon.forEach(coupon => { %>
                             <li class="coupon-item">
                                 Coupon Code: <span class="coupon-code" style="color: red;"> <%= coupon.code %></span>
-                               
-
                                 <br>
                                 <span class="discount-percentage">Discount: <%= coupon.discountPercentage %>%</span>
                             </li>
@@ -241,11 +239,16 @@
                                 <p style="color: black;">Offer price: <%= product.productId.offerPrice %></p>
                                 <p style="text-decoration: line-through; color: red;">Price₹<%= product.productId.price %></p>
                                 <%}else{%>
-                                    <p style="color: black;">Offer price: <%= product.productId.price %></p>
+                                    <p style="color: black;">price: <%= product.productId.price %></p>
                                     <%}%>
                             
                             <p style="color: black;">Quantity: <%= product.quantity %></p>
-                            <p style="color: black;">Subtotal: <%= product.productId.offerPrice * product.quantity %></p>   
+                            <%if(product.productId.offerPrice && product.productId.offerEndTime!==null){ %>
+                                <p style="color: black;">Subtotal: <%= product.productId.offerPrice * product.quantity %></p>  
+                            <%}else{%>
+                                <p style="color: black;">Subtotal: <%= product.productId.price * product.quantity %></p>  
+                            <% } %>
+                             
                         </div>  
                     </div>
                 </div>
@@ -300,10 +303,10 @@ function placeOrder() {
     const address = document.querySelector('input[name="selectedAddress"]:checked');
     const payment = document.querySelector('input[name="payment"]:checked');
     const total = document.getElementById('total').value;
+    console.log(total);
 
     // Check if both address and payment method are selected
     if (!address || !payment) {
-        // alert("Please select both address and payment method.");
         Swal.fire({
                 title: 'Error',
                 text: "Please select both address and payment method",

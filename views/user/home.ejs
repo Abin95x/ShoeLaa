@@ -121,77 +121,25 @@
 							</div>
 		
 							<aside id="colorlib-hero">
-									<ul class="slides">
-										<li>
-											<div class="overlay"></div>
-											<div class="container-fluid">
-												<div class="row">
-													<div class="col-sm-6 offset-sm-3 text-center slider-text">
-														<div class="slider-text-inner">
-															<div class="desc">
-																<h2 class="head-1" style="color: #fdfdfd;">Shoes</h2>
-																<h2 class="head-2" style="color: #ffffff;"></h2>
-																<p class="category"><span style="color: #ffffff;">New trending shoes collections</span></p>
-							
-																<a href="/productsList">
-																	<button type="button" style="background-color: #fbff00; 
-																		border: none;
-																		border-radius: 40px;
-																		color: rgb(0, 0, 0);
-																		padding: 15px 32px;
-																		text-align: center;
-																		text-decoration: none;
-																		display: inline-block;
-																		font-size: 16px;
-																		margin: 4px 2px;
-																		cursor: pointer;">SHOP PRODUCTS</button>
-																</a>
-															</div>
-														</div>
-													</div>
+								<% if (banner && banner.length > 0 && banner[0].status === true) { %>
+								<section id="home-section" class="hero">
+									<div class="slider-item col-12"
+										style="background-image: url(/admin_assets/product/<%=banner[0].image[0]%>); background-size: cover;">
+										<div class="overlay"></div>
+										<div class="container">
+											<div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+												<div class="col-md-12 ftco-animate text-center">
+													<h1 class="mb-2"><%=banner[0].title%></h1>
+													<h2 class="subheading mb-4"><%=banner[0].discription%></h2>
+													<a href="/shop" class="btn btn-primary">Shop now</a>
 												</div>
 											</div>
-										</li>
-										<% if (banner && banner.length > 0) { %>
-										<% if (banner[0].status === true) { %>
-										<section id="home-section" class="hero">
-											<div class="home-slider owl-carousel">
-												<div class="slider-item col-12"
-													style="background-image: url(/admin_assets/product/<%=banner[0].image[0]%>); background-size: cover;">
-													<div class="overlay"></div>
-													<div class="container">
-														<div class="row slider-text justify-content-center align-items-center"
-															data-scrollax-parent="true">
-															<div class="col-md-12 ftco-animate text-center">
-																<h1 class="mb-2"></h1>
-																<h2 class="subheading mb-4"><%=banner[0].discription%></h2>
-																<p><a href="/shop" class="btn btn-primary">Shop now</a></p>
-															</div>
-														</div>
-													</div>
-												</div>
-							
-												<div class="slider-item"
-													style="background-image: url(/admin_assets/product/<%=banner[0].image[1]%>); background-size: cover;">
-													<div class="overlay"></div>
-													<div class="container">
-														<div class="row slider-text justify-content-center align-items-center"
-															data-scrollax-parent="true">
-															<div class="col-sm-12 ftco-animate text-center">
-																<h1 class="mb-2"><%=banner[0].title%></h1>
-																<h2 class="subheading mb-4"><%=banner[0].discription%></h2>
-																<p><a href="#" class="btn btn-primary">View Details</a></p>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</section>
-										<% } %>
-										<% } %>
-									</ul>
-							
+										</div>
+									</div>
+								</section>
+								<% } %>
 							</aside>
+		
 							
 						</div>
 					</section>

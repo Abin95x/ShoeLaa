@@ -28,8 +28,6 @@ const checkOutLoad = async(req,res, next)=>{
         
     }catch(error){
         next(error)
-        // console.log(error.message);
-
     }
 }
 
@@ -39,7 +37,6 @@ const checkOutAddress = async(req,res, next)=>{
     res.render("checkOutAddress")
     }catch(error){
         next(error)
-        // console.log(error.message);
     }
 }
 const checkOutAddresss = async(req,res, next)=>{
@@ -61,42 +58,22 @@ const checkOutAddresss = async(req,res, next)=>{
 
     }catch(error){
         next(error)
-        // console.log(error.message);
-
     }
 }
 
 const placeOrder = async(req,res, next)=>{
     try{
-        console.log('1');
+    
         const orderId = req.query.orderId
-        console.log('2');
         const orderData = await Order.findOne({_id: orderId}).populate('products.productId');
-        console.log('3');
         const total = orderData.totalAmount
-        console.log('4');
-
         const orderDate = orderData.date
-        console.log('5');
-
         const deliveryDate = orderData.expectedDelivery
-        console.log('6');
-
         const deliveryAddress = orderData.deliveryAddress
-        console.log('7');
-
-        
         res.render("placeOrder",{orderId,total,orderDate,deliveryDate,deliveryAddress})
         console.log('8');
-
-        
-
     }catch(error){
-        console.log('99999');
-        
         next(error)
-        // console.log(error.message);
-
     }
 }
 
@@ -106,8 +83,6 @@ const addressPayment = async(req,res, next)=>{
         const payment = req.body.payment
         const total = req.body.total
         let status = payment == "Cash on Delivery" ? "placed" : "pending"
-        
-
         const userId = await User.findOne({ _id: req.session.userId })
         const cartData = await Cart.findOne({user: userId})
         const cartProducts = cartData.product
