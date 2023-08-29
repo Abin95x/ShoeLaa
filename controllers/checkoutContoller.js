@@ -87,6 +87,7 @@ const addressPayment = async(req,res, next)=>{
         const orderDate = new Date()
         const delivery = new Date(orderDate.getTime()+(10*24*60*60*1000))
         const deliveryDate = delivery.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).replace(/\//g, '-');
+        // const coupon = await Coupon.find({})
 
        
           
@@ -129,7 +130,8 @@ const addressPayment = async(req,res, next)=>{
                 date: orderDate,
                 payment: payment,
                 products: cartProducts,
-                expectedDelivery: deliveryDate
+                expectedDelivery: deliveryDate,
+
             })
             
             
@@ -166,10 +168,7 @@ const addressPayment = async(req,res, next)=>{
 
 const verifyPayment = async (req, res, next) => {
     try {
-       
-      
-
-        
+ 
         const { userId } = req.session;
         const cartData = await Cart.findOne({user: userId})
         const cartProducts = cartData.product

@@ -69,34 +69,62 @@ const home = async (req, res ,next) => {
     
       const currentWeekRevenue = await Order.aggregate([
         {
-          $match: {
-            status: { $ne: "cancelled" },
-            date: { $gte: startOfWeek, $lte: endOfWeek },
-          },
+          $lookup: {
+            from: "products", // Replace with the actual collection name for products
+            localField: "products.productId",
+            foreignField: "_id",
+            as: "productInfo"
+          }
         },
         {
-          $unwind: "$products",
+          $unwind: "$productInfo" // Unwind the productInfo array
+        },
+        {
+          $match: {
+            "productInfo.status": { $ne: "cancelled" },
+            date: { $gte: startOfWeek, $lte: endOfWeek }
+          }
         },
         {
           $group: {
             _id: null,
-            total: { $sum: "$products.totalPrice" }, 
-            count: { $sum: 1 },
-          },
-        },
+            revenue: { $sum: "$totalAmount" }, // Use productInfo.totalAmount
+            count: { $sum: 1 }
+          }
+        }
       ]);
+      console.log(currentWeekRevenue);
+      
 
-      const totalRevenue = await Order.aggregate([
-        {
-          $match: { status: { $ne: "cancelled" } },
-        },
-        {
-          $unwind: "$products"
-        },
-        {
-          $group: { _id: null, total: { $sum: "$products.totalPrice" } },
-        },
-      ]);
+      
+
+   const totalRevenue = await Order.aggregate([
+      {
+        $lookup: {
+          from: "products", // Replace with the actual collection name for products
+          localField: "products.productId",
+          foreignField: "_id",
+          as: "productInfo"
+        }
+      },
+      {
+        $unwind: "$productInfo" // Unwind the productInfo array
+      },
+      {
+        $match: {
+          "productInfo.status": { $ne: "cancelled" }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          revenue: { $sum: "$totalAmount" }
+        }
+      }
+    ]);
+
+      
+
       if (totalRevenue.length === 0) {
         totalRevenue.push({ _id: null, total: 0 });
       }

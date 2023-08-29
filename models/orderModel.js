@@ -18,7 +18,7 @@ const orderSchema = new mongoose.Schema({
     },
 
     totalAmount: {
-        type:String,
+        type:Number,
         required: true
     },
 
@@ -41,6 +41,10 @@ const orderSchema = new mongoose.Schema({
         type : Date,
         required : true
     },
+    // coupon: {
+    //     type: Boolean,
+        
+    // },
 
     paymentId: {
         type: String
@@ -66,6 +70,7 @@ const orderSchema = new mongoose.Schema({
             type : String,
             default : 'Placed'
         },
+       
 
        
     }]
