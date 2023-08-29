@@ -69,59 +69,35 @@ const home = async (req, res ,next) => {
     
       const currentWeekRevenue = await Order.aggregate([
         {
-          $lookup: {
-            from: "products", // Replace with the actual collection name for products
-            localField: "products.productId",
-            foreignField: "_id",
-            as: "productInfo"
-          }
-        },
-        {
-          $unwind: "$productInfo" // Unwind the productInfo array
-        },
-        {
           $match: {
-            "productInfo.status": { $ne: "cancelled" },
-            date: { $gte: startOfWeek, $lte: endOfWeek }
-          }
+            status: { $ne: "cancelled" },
+            date: { $gte: startOfWeek, $lte: endOfWeek },
+          },
+        },
+        {
+          $unwind: "$products",
         },
         {
           $group: {
             _id: null,
-            revenue: { $sum: "$totalAmount" }, // Use productInfo.totalAmount
-            count: { $sum: 1 }
-          }
-        }
+            total: { $sum: "$products.totalPrice" }, 
+            count: { $sum: 1 },
+          },
+        },
       ]);
-      console.log(currentWeekRevenue);
-      
 
+      const totalRevenue = await Order.aggregate([
+        {
+          $match: { status: { $ne: "cancelled" } },
+        },
+        {
+          $unwind: "$products"
+        },
+        {
+          $group: { _id: null, total: { $sum: "$products.totalPrice" } },
+        },
+      ]);
       
-
-   const totalRevenue = await Order.aggregate([
-      {
-        $lookup: {
-          from: "products", // Replace with the actual collection name for products
-          localField: "products.productId",
-          foreignField: "_id",
-          as: "productInfo"
-        }
-      },
-      {
-        $unwind: "$productInfo" // Unwind the productInfo array
-      },
-      {
-        $match: {
-          "productInfo.status": { $ne: "cancelled" }
-        }
-      },
-      {
-        $group: {
-          _id: null,
-          revenue: { $sum: "$totalAmount" }
-        }
-      }
-    ]);
 
       
 

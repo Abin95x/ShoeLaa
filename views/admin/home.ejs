@@ -140,7 +140,7 @@
                         <span class="icon icon-sm rounded-circle bg-primary-light"><i class="text-primary material-icons md-monetization_on"></i></span>
                         <div class="text">
                             <h6 class="mb-1 card-title">Total Revenue</h6>
-                            <span>₹<%= totalRevenue[0].revenue %></span>
+                            <span>₹<%= totalRevenue[0].total %></span>
                             <span class="text-sm"> </span>
                         </div>
                     </article>
@@ -176,7 +176,7 @@
                         <span class="icon icon-sm rounded-circle bg-info-light"><i class="text-info material-icons md-shopping_basket"></i></span>
                         <div class="text">
                             <h6 class="mb-1 card-title">Weekly Earning</h6>
-                            <span>₹ <%= currentWeekRevenue[0].revenue %></span>
+                            <span>₹ <%= currentWeekRevenue[0].total %></span>
                             <span class="text-sm">from <%=currentWeekRevenue[0].count %> Orders</span>
                             <span class="text-sm"> Based in your local time. </span>
                         </div>
@@ -226,7 +226,7 @@
 
                                 <th class="align-middle" scope="col"> Product Price </th>
 
-                                <th class="align-middle" scope="col"> Total </th>
+                                <!-- <th class="align-middle" scope="col"> Total </th> -->
                                 <th class="align-middle" scope="col">Payment Method </th>
                                 <th class="align-middle" scope="col"> Status </th>
                             </tr>
@@ -253,7 +253,7 @@
                                                 <td> <%= order.userName %> </td>
                                                 <td> <%= item.totalPrice %> </td>
 
-                                                <td> <%= order.totalAmount %> </td>
+                                                <!-- <td> <%= order.totalAmount %> </td>/ -->
                                                 <td> <%= order.payment %> </td>
                                                 <td> <%= item.status %> </td>
                                             </tr>
