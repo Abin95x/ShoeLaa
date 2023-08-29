@@ -731,7 +731,7 @@ const invoiceDownload = async (req,res,next) => {
 
     const ejsData = ejs.render(html,data)
 
-    const browser = await puppeteer.launch({ headless: "new" });
+    const browser = await puppeteer.launch({ headless: "new" ,executablePath: "/usr/bin/chromium-browser" });
 
     const page = await browser.newPage();
 

@@ -157,27 +157,64 @@
             <input type="submit" value="Submit">
         </form>
     </div>
-    <script>
-        function validateForm() {
-            // Get form inputs
-            var country = document.getElementById('country').value;
-            var name = document.getElementById('name').value;
-            var mobile = document.getElementById('mobile').value;
-            var pin = document.getElementById('pin').value;
-            var houseName = document.getElementById('houseName').value;
-            var village = document.getElementById('village').value;
-            var state = document.getElementById('state').value;
-    
-            // Basic validation
-            if (country.trim() === '' || name.trim() === '' || mobile.trim() === '' || pin.trim() === '' || houseName.trim() === '' || village.trim() === '' || state.trim() === '') {
-                alert('All fields are required.');
-                return false;
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+                
+        <script>
+            function validateForm() {
+                // Get form inputs
+                var country = document.getElementById('country').value;
+                var pin = document.getElementById('pin').value;
+                var mobile = document.getElementById('mobile').value;
+                var houseName = document.getElementById('houseName').value;
+                var village = document.getElementById('village').value;
+                var state = document.getElementById('state').value;
+            
+                // Basic validation
+                if (country.trim() === '' || pin.trim() === '' || mobile.trim() === '' || houseName.trim() === '' || village.trim() === '' || state.trim() === '') {
+                    
+                    Swal.fire({
+                    title: 'Error',
+                    text: "All fields are required. Please fill.",
+                    icon: 'warning',
+                    
+                    })
+                    return false;
+                }
+            
+                // Validate pin and mobile
+                var pinRegex = /^[0-9]{6}$/;
+                var mobileRegex = /^[0-9]{10}$/;
+            
+                if (!pin.match(pinRegex)) {
+                    
+                    Swal.fire({
+                    title: 'Error',
+                    text: "Please enter a valid zip code.",
+                    icon: 'warning',
+                    
+                    })
+                    return false;
+                }
+            
+                if (!mobile.match(mobileRegex)) {
+                    
+                    Swal.fire({
+                    title: 'Error',
+                    text: "Please enter a valid mobile number.",
+                    icon: 'warning',
+                    
+                    })
+                    return false;
+                }
+            
+                // You can add more specific validation rules here, such as checking if the email and phone are valid formats.
+            
+                return true; // Form will be submitted if all validations pass
             }
-    
-            // You can add more specific validation rules here, such as checking if the mobile number is valid, PIN is numeric, etc.
-    
-            return true; // Form will be submitted if all validations pass
-        }
-    </script>
+            </script>
 
 <%- include("./layout/footer.ejs") %>

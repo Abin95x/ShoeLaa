@@ -246,7 +246,7 @@
                                                     </div>
                                                 </td>
                                                 <td><a href="#" class="fw-bold"> <%= order._id %> </a></td>
-                                                <td> <%= order.date %> </td>
+                                                <td> <%= moment(order.date).format('YYYY-MM-DD') %></td> 
                                                 <td> <%= order.userName %> </td>
                                                 <td> <%= order.totalAmount %> </td>
                                                 <td> <%= order.payment %> </td>

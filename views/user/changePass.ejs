@@ -99,20 +99,69 @@
 </div>
 </div>
 
-<script>
-    function validateForm() {
-        var currPassword = document.getElementById('currPassword').value;
-        var password1 = document.getElementById('password1').value;
-        var password2 = document.getElementById('password2').value;
 
-        // Check if any field contains only spaces
-        if (currPassword.trim() === '' || password1.trim() === '' || password2.trim() === '') {
-            alert('Spaces are not allowed');
-            return false;
-        }
-        return true;
-    }
-</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+	
+        <script>
+            function validatePassword() {
+                var currPassword = document.getElementById('currPassword').value;
+                var password1 = document.getElementById("password1").value;
+                var password2 = document.getElementById("password2").value;
+
+                if (currPassword.trim() === '' || password1.trim() === '' || password2.trim() === '') {
+                Swal.fire({
+                        title: 'Error',
+                        text: "Spaces are not allowed",
+                        icon: 'warning',
+                        
+                        })
+                        return false;
+                    
+                }
+    
+                // Check if passwords are at least 6 characters long
+                if (password1.length < 6 || password2.length < 6) {
+
+                    Swal.fire({
+                    title: 'Error',
+                    text: "Passwords must be at least 6 characters long",
+                    icon: 'warning',
+                    
+                    })
+                    return false;
+                }
+    
+                // Check if passwords contain at least one letter and one digit
+                var regex = /^(?=.*[A-Za-z])(?=.*\d).+$/;
+                if (!regex.test(password1) || !regex.test(password2)) {
+
+                    Swal.fire({
+                    title: 'Error',
+                    text: "Passwords must contain at least one letter and one digit",
+                    icon: 'warning',
+                    
+                    })
+                    return false;
+                }
+    
+                // Check if passwords match
+                if (password1 !== password2) {
+                  
+                    Swal.fire({
+                    title: 'Error',
+                    text: "Passwords do not match",
+                    icon: 'warning',
+                    
+                    })
+                    return false;
+                }
+    
+                return true;
+            }
+        </script>
 
 
   <%- include("./layout/footer.ejs") %>

@@ -47,6 +47,8 @@ const home = async (req, res ,next) => {
     const productsCount = products.length
     const category = await Category.find({})
     const categoryCount = category.length
+    const moment = require('moment');
+
 
     const placedCount = await Order.find({ "products.status": "Placed" }).count();
     const deliveredCount = await Order.find({ "products.status": "Delivered" }).count();
@@ -156,7 +158,8 @@ const home = async (req, res ,next) => {
       returnedCount,
       currentWeekRevenue,
       totalRevenue,
-      salesData
+      salesData,
+      moment: moment
 
     }); 
   } catch (error) {

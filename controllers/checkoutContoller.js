@@ -63,7 +63,6 @@ const checkOutAddresss = async(req,res, next)=>{
 
 const placeOrder = async(req,res, next)=>{
     try{
-    
         const orderId = req.query.orderId
         const orderData = await Order.findOne({_id: orderId}).populate('products.productId');
         const total = orderData.totalAmount
@@ -71,7 +70,6 @@ const placeOrder = async(req,res, next)=>{
         const deliveryDate = orderData.expectedDelivery
         const deliveryAddress = orderData.deliveryAddress
         res.render("placeOrder",{orderId,total,orderDate,deliveryDate,deliveryAddress})
-        console.log('8');
     }catch(error){
         next(error)
     }

@@ -167,7 +167,12 @@ input[type="submit"]:hover {
                 <input type="submit" value="Save Changes">
             </form>
         </div>
-        
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+                
         <script>
             function validateForm() {
                 // Get form inputs
@@ -180,7 +185,13 @@ input[type="submit"]:hover {
             
                 // Basic validation
                 if (country.trim() === '' || pin.trim() === '' || mobile.trim() === '' || houseName.trim() === '' || village.trim() === '' || state.trim() === '') {
-                    alert('All fields are required. Please fill.');
+                    
+                    Swal.fire({
+                    title: 'Error',
+                    text: "All fields are required. Please fill.",
+                    icon: 'warning',
+                    
+                    })
                     return false;
                 }
             
@@ -189,12 +200,24 @@ input[type="submit"]:hover {
                 var mobileRegex = /^[0-9]{10}$/;
             
                 if (!pin.match(pinRegex)) {
-                    alert('Please enter a valid 6-digit pin.');
+                    
+                    Swal.fire({
+                    title: 'Error',
+                    text: "Please enter a valid zip code.",
+                    icon: 'warning',
+                    
+                    })
                     return false;
                 }
             
                 if (!mobile.match(mobileRegex)) {
-                    alert('Please enter a valid 10-digit mobile number.');
+                    
+                    Swal.fire({
+                    title: 'Error',
+                    text: "Please enter a valid mobile number.",
+                    icon: 'warning',
+                    
+                    })
                     return false;
                 }
             

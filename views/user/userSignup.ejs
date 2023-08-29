@@ -103,46 +103,51 @@
 </div>
 
 <script>
-    
-    let name=document.getElementById('name')
-    let email=document.getElementById('email')
-    let mobile=document.getElementById('mobile')
-    let password=document.getElementById('password')
-  
+    let name = document.getElementById('name');
+    let email = document.getElementById('email');
+    let mobile = document.getElementById('mobile');
+    let password = document.getElementById('password');
 
-    name.addEventListener("input",()=>{
-        if(name.value.trim()==""){
-            name.setCustomValidity("name cannot be null")
-        }else{
-            name.setCustomValidity("")
+    name.addEventListener("input", () => {
+        if (name.value.trim() === "") {
+            name.setCustomValidity("Name cannot be empty");
+        } else {
+            name.setCustomValidity("");
         }
+    });
 
-    })
-    email.addEventListener("input",()=>{
-        if(email.value.trim()==""){
-            email.setCustomValidity("email cannot be null")
-        }else{
-            email.setCustomValidity("")
+    email.addEventListener("input", () => {
+        if (email.value.trim() === "") {
+            email.setCustomValidity("Email cannot be empty");
+        } else {
+            email.setCustomValidity("");
         }
+    });
 
-    })
-    mobile.addEventListener("input",()=>{
-        if(mobile.value.trim()==""){
-            mobile.setCustomValidity("mobile  number cannot be null")
-        }else{
-            mobile.setCustomValidity("")
+    mobile.addEventListener("input", () => {
+        const mobileValue = mobile.value.trim();
+        if (mobileValue === "") {
+            mobile.setCustomValidity("Mobile number cannot be empty");
+        } else if (mobileValue.length !== 10) {
+            mobile.setCustomValidity("Mobile number must have exactly 10 digits");
+        } else {
+            mobile.setCustomValidity("");
         }
+    });
 
-    })
-    password.addEventListener("input",()=>{
-        if(password.value.trim()==""){
-            password.setCustomValidity("password  number cannot be null")
-        }else{
-            password.setCustomValidity("")
+    password.addEventListener("input", () => {
+        const passwordValue = password.value.trim();
+        if (passwordValue === "") {
+            password.setCustomValidity("Password cannot be empty");
+        } else if (passwordValue.length < 6) {
+            password.setCustomValidity("Password must be at least 6 characters");
+        } else if (!/\d/.test(passwordValue) || !/[a-zA-Z]/.test(passwordValue)) {
+            password.setCustomValidity("Password must contain both letters and numbers");
+        } else {
+            password.setCustomValidity("");
         }
+    });
+</script>
 
-    })
-    
-    </script>
 
 <%- include("./layout/footer.ejs") %>

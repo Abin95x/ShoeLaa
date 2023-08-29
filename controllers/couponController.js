@@ -150,7 +150,7 @@ const removeCoupon = async (req, res, next) => {
     try {
         const userId = req.session.userId;
         const selectedCoupon = req.body.coupon; 
-        console.log(selectedCoupon, "111111111111111111111111111111111111");
+       
 
         // Step 1: Fetch the user's cart details from the database
         const cart = await Cart.findOne({ user: req.session.userId });
@@ -178,6 +178,14 @@ const removeCoupon = async (req, res, next) => {
         cart.coupon = null;
         cart.grandTotal = newGrandTotal;
         await cart.save(); // Save the updated cart data
+
+        // Remove user details from coupon
+        if (coupon) {
+            await Coupon.findOneAndUpdate(
+                { code: coupon.code },
+                { $pull: { users: req.session.userId } }
+            );
+        }
         
         return res.status(200).json({ message: 'Coupon removed successfully', newGrandTotal });
 
@@ -186,12 +194,6 @@ const removeCoupon = async (req, res, next) => {
     }
 };
 
-
-
-
-module.exports = {
-    removeCoupon
-};
 
 
 
