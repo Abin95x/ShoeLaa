@@ -108,41 +108,36 @@
 					</li>
 					<% if (banner && banner.length > 0) { %>
 					<% if (banner[0].status === true) { %>
-					<section id="home-section" class="hero">
-						<div class="home-slider owl-carousel">
-							<div class="slider-item col-12"
-								style="background-image: url(/admin_assets/product/<%=banner[0].image[0]%>); background-size: cover;">
-								<div class="overlay"></div>
-								<div class="container">
-									<div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-										
+						<section id="home-section" class="hero">
+							<div class="home-slider owl-carousel">
+								<div class="slider-item col-12" style="background-image: url(/admin_assets/product/<%=banner[0].image[0]%>); background-size: cover; height: 600px;"> <!-- Adjust the height value as needed -->
+									<div class="overlay"></div>
+									<div class="container">
+										<div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true"></div>
 									</div>
 								</div>
-							</div>
-		
-							<aside id="colorlib-hero">
-								<% if (banner && banner.length > 0 && banner[0].status === true) { %>
-								<section id="home-section" class="hero">
-									<div class="slider-item col-12"
-										style="background-image: url(/admin_assets/product/<%=banner[0].image[0]%>); background-size: cover;">
-										<div class="overlay"></div>
-										<div class="container">
-											<div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-												<div class="col-md-12 ftco-animate text-center">
-													<h1 class="mb-2"><%=banner[0].title%></h1>
-													<h2 class="subheading mb-4"><%=banner[0].discription%></h2>
-													<a href="/shop" class="btn btn-primary">Shop now</a>
+						
+								<aside id="colorlib-hero">
+									<% if (banner && banner.length > 0 && banner[0].status === true) { %>
+									<section id="home-section" class="hero">
+										<div class="slider-item col-12 " style="background-image: url(/admin_assets/product/<%=banner[0].image[0]%>); background-size: cover; height: 500px;"> <!-- Adjust the height value as needed -->
+											<div class="overlay"></div>
+											<div class="container">
+												<div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+													<div class="col-md-12 ftco-animate text-center">
+														<h1 class="mb-2"><%=banner[0].title%></h1>
+														<h2 class="subheading mb-4"><%=banner[0].discription%></h2>
+														<a href="/shop" class="btn btn-primary">Shop now</a>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								</section>
-								<% } %>
-							</aside>
-		
-							
-						</div>
-					</section>
+									</section>
+									<% } %>
+								</aside>
+							</div>
+						</section>
+						
 					<% } %>
 					<% } %>
 				</ul>

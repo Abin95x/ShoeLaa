@@ -6,14 +6,10 @@ const isLogin=async(req,res,next)=>{
         else{
             res.redirect('/admin/adminLogin')
         }
-        
-        
     } catch (error) {
         console.log(error.message)
     }
 }
-
-
 
 const isLogout = async(req,res,next)=>{
     try {
@@ -23,10 +19,8 @@ const isLogout = async(req,res,next)=>{
             next()
         }
         
-    } catch (error) {
-        
-        console.log(error.message);
-        
+    } catch (error) {   
+        console.log(error.message); 
     }
 }
 
@@ -34,5 +28,4 @@ const isLogout = async(req,res,next)=>{
 module.exports={
     isLogin,
     isLogout,
-    
 }

@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const fs = require('fs')
 
 //login-----------------------------------------------------------------------------------------------------
-const adminLogin = async (req, res ,next) => {
+const adminLogin = async (req, res, next) => {
   try {
     res.render("adminLogin")
   } catch (error) {
@@ -15,7 +15,7 @@ const adminLogin = async (req, res ,next) => {
   }
 }
 
-const verifyAdmin = async (req, res ,next) => {
+const verifyAdmin = async (req, res, next) => {
   try {
 
     const email = req.body.email
@@ -39,9 +39,9 @@ const verifyAdmin = async (req, res ,next) => {
 
 
 //home
-const home = async (req, res ,next) => {
+const home = async (req, res, next) => {
   try {
-    const orders = await Order.find({}).populate('products');  
+    const orders = await Order.find({}).populate('products');
     const orderCount = orders.length;
     const products = await Product.find({})
     const productsCount = products.length
@@ -53,58 +53,58 @@ const home = async (req, res ,next) => {
     const placedCount = await Order.find({ "products.status": "Placed" }).count();
     const deliveredCount = await Order.find({ "products.status": "Delivered" }).count();
     const cancelledCount = await Order.find({ "products.status": "cancelled" }).count();
-    const returnedCount = await Order.find({ "products.status": "Returned"}).count();
+    const returnedCount = await Order.find({ "products.status": "Returned" }).count();
 
-  
-      let currentDate = new Date();
-      currentDate.setHours(0);
-      currentDate.setMinutes(0);
-      currentDate.setSeconds(0);
-      currentDate.setMilliseconds(0);
-    
-      const startOfWeek = new Date(currentDate);
-      startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
-      const endOfWeek = new Date(currentDate);
-      endOfWeek.setDate(startOfWeek.getDate() + 6);
-    
-      const currentWeekRevenue = await Order.aggregate([
-        {
-          $match: {
-            status: { $ne: "cancelled" },
-            date: { $gte: startOfWeek, $lte: endOfWeek },
-          },
-        },
-        {
-          $unwind: "$products",
-        },
-        {
-          $group: {
-            _id: null,
-            total: { $sum: "$products.totalPrice" }, 
-            count: { $sum: 1 },
-          },
-        },
-      ]);
 
-      const totalRevenue = await Order.aggregate([
-        {
-          $match: { status: { $ne: "cancelled" } },
-        },
-        {
-          $unwind: "$products"
-        },
-        {
-          $group: { _id: null, total: { $sum: "$products.totalPrice" } },
-        },
-      ]);
-      
+    let currentDate = new Date();
+    currentDate.setHours(0);
+    currentDate.setMinutes(0);
+    currentDate.setSeconds(0);
+    currentDate.setMilliseconds(0);
 
-      
+    const startOfWeek = new Date(currentDate);
+    startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+    const endOfWeek = new Date(currentDate);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
 
-      if (totalRevenue.length === 0) {
-        totalRevenue.push({ _id: null, total: 0 });
-      }
-   
+    const currentWeekRevenue = await Order.aggregate([
+      {
+        $match: {
+          status: { $ne: "cancelled" },
+          date: { $gte: startOfWeek, $lte: endOfWeek },
+        },
+      },
+      {
+        $unwind: "$products",
+      },
+      {
+        $group: {
+          _id: null,
+          total: { $sum: "$products.totalPrice" },
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const totalRevenue = await Order.aggregate([
+      {
+        $match: { status: { $ne: "cancelled" } },
+      },
+      {
+        $unwind: "$products"
+      },
+      {
+        $group: { _id: null, total: { $sum: "$products.totalPrice" } },
+      },
+    ]);
+
+
+
+
+    if (totalRevenue.length === 0) {
+      totalRevenue.push({ _id: null, total: 0 });
+    }
+
     if (currentWeekRevenue.length === 0) {
       currentWeekRevenue.push({ _id: null, total: 0, count: 0 });
     }
@@ -130,8 +130,8 @@ const home = async (req, res ,next) => {
       },
       { $sort: { _id: 1 } }
     ]);
-    
-    
+
+
     for (let i = 1; i <= 12; i++) {
       let result = true;
       for (let j = 0; j < salesByYear.length; j++) {
@@ -149,8 +149,8 @@ const home = async (req, res ,next) => {
     for (let i = 0; i < sales.length; i++) {
       salesData.push(sales[i].total);
     }
-    
-    
+
+
     res.render("home", {
       orderCount,
       productsCount,
@@ -165,7 +165,7 @@ const home = async (req, res ,next) => {
       salesData,
       moment: moment
 
-    }); 
+    });
   } catch (error) {
     next(error);
   }
@@ -200,11 +200,11 @@ const userBlock = async (req, res) => {
   }
 };
 
-const logout = async(req,res,next) => {
-  try{
+const logout = async (req, res, next) => {
+  try {
     req.session.destroy();
     res.redirect('/admin/adminLogin')
-  }catch(error){
+  } catch (error) {
     next(error)
   }
 }
@@ -229,7 +229,7 @@ module.exports = {
   userManage,
   userBlock,
   logout,
- 
-  
+
+
 
 }
