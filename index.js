@@ -1,4 +1,5 @@
 require("dotenv").config()
+const job = require('./config/cronJob')
 const mongoose = require("mongoose")
 mongoose.connect(process.env.MONGO).then((val)=> console.log("Database connected"))
 const express = require("express")
