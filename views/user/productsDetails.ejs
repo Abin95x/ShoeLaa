@@ -412,12 +412,20 @@
                         })
                     } else {
                         Swal.fire({
-							title: "Error",
-							icon: "error",
-							text: response.message,
-							timer: 1500
-						})
+							title: "info",
+							icon: "info",
+							text: 'Please Login',
+							timer: 5000
+							
+						}).then((result) => {
+							// Check if OK button is clicked
+							if (result.isConfirmed) {
+								// Redirect to the login page
+								window.location.href = "/userLogin"; 
+							}
+						});
                     }
+
                 },
                 error: (err) => {
 
@@ -452,11 +460,18 @@
                      
 					}else{
 						Swal.fire({
-							title: "Error",
-							icon: "error",
-							text: response.message,
-							timer: 1500
-						})
+							title: "info",
+							icon: "info",
+							text: 'Please Login',
+							timer: 5000
+							
+						}).then((result) => {
+							// Check if OK button is clicked
+							if (result.isConfirmed) {
+								// Redirect to the login page
+								window.location.href = "/userLogin"; 
+							}
+						});
 					}
 				},
 				error: (error)=>{
