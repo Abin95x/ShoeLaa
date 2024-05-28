@@ -26,7 +26,7 @@ function pingServer() {
     req.end();
 }
 
- const job = cron.schedule('*/14 * * * *', pingServer);
+ const job = cron.schedule('*/13 * * * *', pingServer);
  module.exports = {job}
 
 job.start();
