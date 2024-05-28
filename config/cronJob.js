@@ -5,7 +5,7 @@ function pingServer() {
     console.log('Pinging server to keep it alive...');
     
     const options = {
-        hostname: 'shoelaa.onrender.com',
+        hostname: 'shoelaa-363c.onrender.com',
         method: 'GET',
         timeout: 60000 
     };
