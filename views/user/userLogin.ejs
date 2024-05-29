@@ -1,5 +1,36 @@
     <%- include("./layout/header.ejs") %>
 
+    <style>
+        .btn {
+               background-color: #147900;
+               border: 2px solid #e504f9;
+               color: #fff;
+               padding: 10px 20px;
+               text-align: center;
+               display: inline-block;
+               font-size: 16px;
+               cursor: pointer;
+               transition: background-color 0.3s ease;
+           }
+   
+           .btn-primary {
+               width: 100%;
+               max-width: 500px; /* Adjust max-width as needed */
+               margin: 0 auto;
+           }
+   
+           .btn:hover {
+               background-color: #f2ff00;
+           }
+   
+           @media (max-width: 600px) {
+               .btn-primary {
+                   font-size: 14px;
+                   padding: 8px 16px;
+               }
+           }
+   </style>
+
     <nav class="colorlib-nav" role="navigation">
         <div class="top-menu">
             <div class="container">
@@ -90,7 +121,7 @@
                             <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" required>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary" style="width: 13.2cm; background-color: #ffee00; border: #e504f9; color: rgb(94, 92, 92);">Login</button>
+                            <button type="submit" class="btn btn-primary">Login</button>
                         </div>
                     </form>
                 </div>
