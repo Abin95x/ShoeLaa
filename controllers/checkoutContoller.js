@@ -148,7 +148,9 @@ const addressPayment = async(req,res, next)=>{
 
       
         instance.orders.create(options, function (err, order) {
-            
+            if(err){
+                console.log(err);
+            }
           res.json({ order });
         });
            
