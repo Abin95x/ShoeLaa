@@ -304,7 +304,6 @@ function placeOrder() {
     const address = document.querySelector('input[name="selectedAddress"]:checked');
     const payment = document.querySelector('input[name="payment"]:checked');
     const total = document.getElementById('total').value;
-    console.log(total);
 
     // Check if both address and payment method are selected
     if (!address || !payment) {
@@ -326,6 +325,7 @@ function placeOrder() {
             total: total,
         },
         success: (response) => {
+            console.log(response);
             if (response.success) {
                 window.location.href = `/placeOrder?orderId=${response.orderId}&total=${response.total}&address=${response.address}`;
             } else {
@@ -341,7 +341,7 @@ function placeOrder() {
         
         function razorpayPayment(order) {
             var options = {
-                "key": "rzp_test_ihrzfOHnp2ozTT", 
+                "key": "rzp_test_b2Cx0YqQtUS7xV", 
                 "amount": order.amount, 
                 "currency": "INR",
                 "name": "Shoe Laa", 
@@ -367,13 +367,9 @@ function placeOrder() {
             var rzp1 = new Razorpay(options);
             
             rzp1.open();
-           
-            
         }
 
-        function verifyPayment(payment, order) {
-            console.log("6");
-           
+        function verifyPayment(payment, order) {           
             $.ajax({
                 url: "/verifyPayment",
                 method: 'post',
@@ -449,12 +445,10 @@ function placeOrder() {
 
 const removeCoupon = async function(coupon){
     try {
-        console.log(coupon);
         const response = await axios.patch('/deleteCoupon', { coupon });
 
         if (response.status === 200) {
             const { message, newGrandTotal } = response.data;
-            console.log(message);
             console.log("New Grand Total:", newGrandTotal);
 
             const cartDetailDiv = document.querySelector('.cart-detail');
